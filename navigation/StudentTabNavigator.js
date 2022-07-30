@@ -141,16 +141,13 @@ const StudentTabNavigator = () => {
         tabBarShowLabel: false,
         tabBarIcon: {},
         tabBarStyle: {
-          height: 80,
+          height: 60,
           position: "absolute",
-          bottom: 16,
-          right: 16,
-          left: 16,
           borderRadius: 15,
           display: getTabBarVisibility(route),
           borderTopWidth: 0,
           elevation: 0,
-          backgroundColor: theme.colors.transparent,
+          backgroundColor: theme.colors.white,
         },
         tabBarInactiveTintColor: theme.colors.tabInactiveColor,
         tabBarActiveTintColor: theme.colors.tabActiveColor,
@@ -165,7 +162,7 @@ const StudentTabNavigator = () => {
             <Ionicons
               name="home-outline"
               color={color}
-              size={focused ? 35 : 27}
+              size={focused ? 30 : 25}
             />
           ),
         })}
@@ -176,7 +173,7 @@ const StudentTabNavigator = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => (
-            <FontAwesome5 name="map" size={focused ? 35 : 27} color={color} />
+            <FontAwesome5 name="map" size={focused ? 30 : 25} color={color} />
           ),
         }}
       />
@@ -190,7 +187,7 @@ const StudentTabNavigator = () => {
           tabBarIcon: ({ color, size, focused }) => (
             <FontAwesome5
               name="ticket-alt"
-              size={focused ? 35 : 27}
+              size={focused ? 30 : 25}
               color={color}
             />
           ),
@@ -203,7 +200,7 @@ const StudentTabNavigator = () => {
         options={({ route }) => ({
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => (
-            <FontAwesome5 name="user" color={color} size={focused ? 35 : 27} />
+            <FontAwesome5 name="user" color={color} size={focused ? 30 : 25} />
           ),
         })}
       />
