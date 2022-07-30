@@ -6,41 +6,19 @@ import {
   Image,
   Text,
 } from "react-native";
-import React, { useMemo, useRef, useEffect } from "react";
+import React, { useMemo, useRef } from "react";
 import { useTheme, Divider } from "react-native-paper";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchBusCurrentLocation } from "../../redux/ApiCalls/bus";
-import Loader from "../../components/Loader";
-import MapMarker from "../../components/MapMarker";
+
 import Map from "../../components/Map/Map";
-import useSWR from "swr";
+
+import DestinationToggle from "../../components/Bus/DestinationToggle";
 
 const BusDetails = ({ route, navigation }) => {
   const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["25%", "13%"]);
+  const snapPoints = useMemo(() => ["15%", "55%"]);
   const theme = useTheme();
-
-  const busFetcher = async () => {
-    const response = await fetch(
-      `https://boiling-escarpment-76670.herokuapp.com/api/v1/bus/${route.params?.busId}`
-    );
-
-    return response.json();
-  };
-
-  const { data, error } = useSWR("/bus/location", busFetcher, {
-    refreshInterval: 1000,
-  });
-
-  useEffect(() => {
-    console.log(data?.location?.coordinates);
-  }, [data?.location]);
-
-  if (!data && !error && data?.location?.coordinates == undefined) {
-    return <Loader />;
-  }
-
+  const { info, busId } = route?.params;
   return (
     <View
       style={{
@@ -56,8 +34,13 @@ const BusDetails = ({ route, navigation }) => {
       /> */}
       <Map
         title={route.params["busId"]}
-        details={data}
-        location={data?.location}
+        busId={route.params["busId"]}
+        info={info && info}
+        location={
+          info?.location || {
+            coordinates: [90.269018, 23.936878],
+          }
+        }
       />
 
       <Image
@@ -103,8 +86,9 @@ const BusDetails = ({ route, navigation }) => {
               <Text variant="headlineLarge">Resereved Seats:</Text>
               <Text>9</Text>
             </View>
-            <Divider style={{ marginBottom: 20, marginTop: 10 }} />
 
+            <DestinationToggle />
+            <Divider style={{ marginVertical: 10 }} />
             <TouchableOpacity
               style={{
                 backgroundColor: theme.colors.accent,
